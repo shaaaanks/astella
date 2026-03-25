@@ -8,7 +8,7 @@ import {
   signInWithPopup,
   signOut 
 } from 'firebase/auth';
-import { auth, googleProvider } from '@/lib/firebase';
+import { auth, googleProvider, githubProvider } from '@/lib/firebase';
 
 const AuthContext = createContext({});
 
@@ -43,13 +43,17 @@ export const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
+  const loginWithGithub = () => {
+    return signInWithPopup(auth, githubProvider);
+  };
+
   const logout = async () => {
     setUser(null);
     await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, loginWithGoogle, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, signup, loginWithGoogle, loginWithGithub, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
